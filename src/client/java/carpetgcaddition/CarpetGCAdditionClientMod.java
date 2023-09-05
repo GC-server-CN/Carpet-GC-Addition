@@ -13,6 +13,8 @@ public class CarpetGCAdditionClientMod implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        CarpetGCAdditionMod.onInitializeClient();
+
         ClientPlayNetworking.registerGlobalReceiver(AllFakePlayerPropsS2CPacket.TYPE, CarpetGCAdditionClientMod::applyPacket);
         ClientPlayNetworking.registerGlobalReceiver(FakePlayerGameJOES2CPacket.TYPE, CarpetGCAdditionClientMod::applyPacket);
         ClientPlayNetworking.registerGlobalReceiver(FakePlayerPropsS2CPacket.TYPE, CarpetGCAdditionClientMod::applyPacket);

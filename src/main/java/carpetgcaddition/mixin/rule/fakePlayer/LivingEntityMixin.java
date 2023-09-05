@@ -24,7 +24,7 @@ public abstract class LivingEntityMixin {
         }
 
         FakePlayerPropertiesManager mgr = entity.getWorld().isClient
-            ? CarpetGCAdditionMod.getClientFakePlayerPropsManager()
+            ? CarpetGCAdditionMod.getClient().getFakePlayerPropsManager()
             : CarpetGCAdditionMod.getCarpetServer().getFakePlayerPropsManager();
 
         if (isDisableCollision(mgr, (PlayerEntity)self, (PlayerEntity)entity)) {

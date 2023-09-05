@@ -2,6 +2,9 @@ package carpetgcaddition.network.utils;
 
 import carpetgcaddition.CarpetGCAdditionMod;
 import carpetgcaddition.fakeplayeraddition.FakePlayerAdditionProperties;
+import carpetgcaddition.fakeplayeraddition.FakePlayerPropertiesManager;
+
+import java.util.Optional;
 
 public class ClientFakePlayerPacketApplyUtils{
     public static void updateProperties(String playerName, FakePlayerAdditionProperties prop) {
@@ -9,22 +12,23 @@ public class ClientFakePlayerPacketApplyUtils{
             return;
         }
 
-        var existing = CarpetGCAdditionMod.getClientFakePlayerPropsManager().getProperties(playerName);
-        if (existing.isEmpty()) {
-            addProperties(playerName, prop);
-            return;
-        }
+        getClientFakePlayerPropsManager().ifPresent(mgr -> {
+            var props = mgr.getProperties(playerName);
+            if (props.isEmpty()) {
+                addProperties(playerName, prop);
+                return;
+            }
 
-        var t = existing.get();
-        t.collisionWithPlayer = prop.collisionWithPlayer;
+            props.get().collisionWithPlayer = prop.collisionWithPlayer;
+        });
     }
 
     public static void addProperties(String playerName, FakePlayerAdditionProperties prop) {
-        CarpetGCAdditionMod.getClientFakePlayerPropsManager().add(playerName, prop);
+            getClientFakePlayerPropsManager().ifPresent(mgr -> mgr.add(playerName, prop));
     }
 
     public static void removeProperties(String playerName) {
-        CarpetGCAdditionMod.getClientFakePlayerPropsManager().remove(playerName);
+        getClientFakePlayerPropsManager().ifPresent(mgr -> mgr.remove(playerName));
     }
 
     public static void setAllProperties(String[] playerName, FakePlayerAdditionProperties[] props) {
@@ -33,11 +37,16 @@ public class ClientFakePlayerPacketApplyUtils{
             return;
         }
 
-        var mgr = CarpetGCAdditionMod.getClientFakePlayerPropsManager();
-        mgr.clear();
+        getClientFakePlayerPropsManager().ifPresent(mgr -> {
+            mgr.clear();
+            for (int i = 0; i < playerName.length; i++) {
+                mgr.add(playerName[i], props[i]);
+            }
+        });
+    }
 
-        for (int i = 0; i < playerName.length; i++) {
-            mgr.add(playerName[i], props[i]);
-        }
+    private static Optional<FakePlayerPropertiesManager> getClientFakePlayerPropsManager() {
+        var client = CarpetGCAdditionMod.getClient();
+        return client == null ? Optional.empty() : Optional.of(client.getFakePlayerPropsManager());
     }
 }

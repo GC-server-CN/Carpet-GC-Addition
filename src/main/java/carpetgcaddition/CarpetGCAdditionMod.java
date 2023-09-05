@@ -11,20 +11,22 @@ public class CarpetGCAdditionMod implements ModInitializer {
     public static final String PACKET_NAMESPACE = "carpet_gc_addition";
 
     private static CarpetGCAdditionServer server;
-    private static FakePlayerPropertiesManager clientFakePlayerPropsManager;
+    private static  CarpetGCAdditionClient client;
 
     public static CarpetGCAdditionServer getCarpetServer() {
         return server;
     }
-
-    public static FakePlayerPropertiesManager getClientFakePlayerPropsManager() {
-        return clientFakePlayerPropsManager;
+    public static CarpetGCAdditionClient getClient() {
+        return client;
     }
 
     @Override
     public void onInitialize() {
         Translator.init();
-        clientFakePlayerPropsManager = new FakePlayerPropertiesManager();
         server = CarpetGCAdditionServer.create();
+    }
+
+    public static void onInitializeClient() {
+        client = CarpetGCAdditionClient.create();
     }
 }
