@@ -76,4 +76,7 @@ public class CarpetGCAdditionSettings {
 
     @Rule(categories = {FEATURE, SURVIVAL})
     public static boolean softDeepslate = false;
+
+    @Rule(categories = {GCServer, FEATURE})
+    public static boolean keepTickEntities = false;
 }

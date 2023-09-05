@@ -37,6 +37,9 @@ class ENTranslator {
 
         builder.rule("softDeepslate")
             .desc("can break deepslate in one click by netherite pickaxe (haste II + efficiency V required)");
+
+        builder.rule("keepTickEntities")
+            .desc("make server always tick entities");
     }
 
     private static void addRuleValidErrorMessage(TranslationBuilder builder) {

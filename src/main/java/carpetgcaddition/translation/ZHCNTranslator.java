@@ -48,6 +48,10 @@ class ZHCNTranslator {
         builder.rule("softDeepslate")
             .name("易碎深板岩")
             .desc("开启后可使用下界合金稿秒破深板岩 (需要急迫2 + 效率5)");
+
+        builder.rule("keepTickEntities")
+            .name("保持实体更新")
+            .desc("开启后总是进行实体更新，可绕过服务器要求有玩家在线才进行更新的行为");
     }
 
     private static void addRuleValidErrorMessage(TranslationBuilder builder) {

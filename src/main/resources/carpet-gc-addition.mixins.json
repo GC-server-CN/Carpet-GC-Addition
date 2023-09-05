@@ -6,6 +6,7 @@
         "rule.chunkLoader.NoteBlockMixin",
         "rule.chunkLoader.PistonBlockMixin",
         "rule.fakePlayer.LivingEntityMixin",
+        "rule.keepTickEntities.ServerWorldMixin",
         "rule.softBlock.AbstractBlockStateMixin"
     ],
     "server": [
