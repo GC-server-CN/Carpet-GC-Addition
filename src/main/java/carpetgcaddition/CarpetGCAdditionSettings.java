@@ -36,7 +36,7 @@ public class CarpetGCAdditionSettings {
         public Integer validate(@Nullable ServerCommandSource source, CarpetRule<Integer> changingRule, Integer newValue, String userInput) {
             var r = super.validate(source, changingRule, newValue, userInput);
             if (r != null) {
-                ChunkLoaderUtils.setNoteBlockTicketTime(noteBlockChunkLoaderTime);
+                ChunkLoaderUtils.setNoteBlockTicketTime(newValue);
             }
             return r;
         }

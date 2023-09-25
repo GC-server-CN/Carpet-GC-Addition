@@ -1,5 +1,6 @@
 package carpetgcaddition.utils;
 
+import carpetgcaddition.CarpetGCAdditionSettings;
 import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -19,7 +20,18 @@ public abstract class ChunkLoaderUtils {
 
     static {
         PISTON_HEAD_TICKET = ChunkTicketType.create(PISTON_HEAD_TICKET_TYPE_NAME, Comparator.comparingLong(ChunkPos::toLong), 6);
-        setNoteBlockTicketTime(300);
+    }
+
+    private static ChunkTicketType<ChunkPos> getNoteBlockTicket() {
+        if (noteBlockTicket == null) {
+            noteBlockTicket = ChunkTicketType.create(
+                NOTE_BLOCK_TICKET_TYPE_NAME,
+                Comparator.comparingLong(ChunkPos::toLong),
+                CarpetGCAdditionSettings.noteBlockChunkLoaderTime
+            );
+        }
+
+        return noteBlockTicket;
     }
 
     public static boolean isNoteBlockLoadExpiryTimeInRange(int expiryTicks) {
@@ -34,8 +46,9 @@ public abstract class ChunkLoaderUtils {
 
     public static LoadChunkResult noteBlockChunkTick(ServerWorld world, BlockPos pos, int radius) {
         ChunkPos cp = new ChunkPos(pos);
-        long expiryTick = noteBlockTicket.getExpiryTicks();
-        world.getChunkManager().addTicket(noteBlockTicket, cp, radius, cp);
+        var ticket = getNoteBlockTicket();
+        long expiryTick = ticket.getExpiryTicks();
+        world.getChunkManager().addTicket(ticket, cp, radius, cp);
         return new LoadChunkResult(pos, expiryTick, radius);
     }
 

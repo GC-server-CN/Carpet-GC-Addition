@@ -31,17 +31,18 @@ public class ChunkLoadLogger extends Logger {
             default -> player.getWorld().getRegistryKey();
         };
 
-        if (blockWorld.getRegistryKey() != dim)return null;
+        if (blockWorld.getRegistryKey() != dim) return null;
 
         var pos = loadedChunk.getBlockPos();
-        var chunk = loadedChunk.getChunkPos();
 
         return new Text[]{Messenger.c(
                 messagePrefix,
                 MESSAGE_ITEM_SPACE_TEXT,
                 Messenger.s("(%d, %d, %d)".formatted(pos.getX(), pos.getY(), pos.getZ()), "c"),
                 MESSAGE_ITEM_SPACE_TEXT,
-                Messenger.s("[%d, %d]".formatted(chunk.x, chunk.z), "y")
+                Messenger.s(loadedChunk.getChunkPos().toString(), "y"),
+                MESSAGE_ITEM_SPACE_TEXT,
+                Messenger.s(loadedChunk.getExpiryTicks() + " tick")
         )};
     }
 }
