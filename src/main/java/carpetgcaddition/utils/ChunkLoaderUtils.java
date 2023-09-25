@@ -24,14 +24,18 @@ public abstract class ChunkLoaderUtils {
 
     private static ChunkTicketType<ChunkPos> getNoteBlockTicket() {
         if (noteBlockTicket == null) {
-            noteBlockTicket = ChunkTicketType.create(
-                NOTE_BLOCK_TICKET_TYPE_NAME,
-                Comparator.comparingLong(ChunkPos::toLong),
-                CarpetGCAdditionSettings.noteBlockChunkLoaderTime
-            );
+            setNoteBlockTicketTime(CarpetGCAdditionSettings.noteBlockChunkLoaderTime, 300);
         }
 
         return noteBlockTicket;
+    }
+
+    private static void setNoteBlockTicket(int expiryTicks) {
+        noteBlockTicket = ChunkTicketType.create(
+            NOTE_BLOCK_TICKET_TYPE_NAME,
+            Comparator.comparingLong(ChunkPos::toLong),
+            expiryTicks
+        );
     }
 
     public static boolean isNoteBlockLoadExpiryTimeInRange(int expiryTicks) {
@@ -39,8 +43,15 @@ public abstract class ChunkLoaderUtils {
     }
 
     public static void setNoteBlockTicketTime(int expiryTicks) {
+        var currentExpiryTicks = CarpetGCAdditionSettings.noteBlockChunkLoaderTime;
+        setNoteBlockTicketTime(expiryTicks, isNoteBlockLoadExpiryTimeInRange(currentExpiryTicks) ? currentExpiryTicks : 300);
+    }
+
+    private static void setNoteBlockTicketTime(int expiryTicks, int fallbackExpiryTicks) {
         if (isNoteBlockLoadExpiryTimeInRange(expiryTicks)) {
-            noteBlockTicket = ChunkTicketType.create(NOTE_BLOCK_TICKET_TYPE_NAME, Comparator.comparingLong(ChunkPos::toLong), expiryTicks);
+            setNoteBlockTicket(expiryTicks);
+        } else if (noteBlockTicket == null || noteBlockTicket.getExpiryTicks() != fallbackExpiryTicks) {
+            setNoteBlockTicket(fallbackExpiryTicks);
         }
     }
 
