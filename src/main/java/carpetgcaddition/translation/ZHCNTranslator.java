@@ -45,10 +45,6 @@ class ZHCNTranslator {
             .desc("禁用假人与其他任何玩家(包括假人)之间的碰撞")
             .extra("可以使用 /fakePlayer 的 collision 选项针对单个假人覆盖配置");
 
-        builder.rule("softDeepslate")
-            .name("易碎深板岩")
-            .desc("开启后可使用下界合金稿秒破深板岩 (需要急迫2 + 效率5)");
-
         builder.rule("keepTickEntities")
             .name("保持实体更新")
             .desc("开启后总是进行实体更新，可绕过服务器要求有玩家在线才进行更新的行为");

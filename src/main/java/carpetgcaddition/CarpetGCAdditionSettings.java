@@ -68,14 +68,8 @@ public class CarpetGCAdditionSettings {
         }
     }
 
-    @Rule(categories = {GCServer, EXPERIMENTAL})
-    public static boolean playerMessageProperOrderDisabled = false;
-
     @Rule(categories = GCServer)
     public static boolean fakePlayerCollisionWithPlayerDisabled = false;
-
-    @Rule(categories = {FEATURE, SURVIVAL})
-    public static boolean softDeepslate = false;
 
     @Rule(categories = {GCServer, FEATURE})
     public static boolean keepTickEntities = false;

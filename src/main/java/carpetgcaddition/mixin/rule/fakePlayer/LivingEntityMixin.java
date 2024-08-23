@@ -37,8 +37,8 @@ public abstract class LivingEntityMixin {
             return false;
         }
 
-        var prop1 = mgr.getProperties(player1.getEntityName());
-        var prop2 = mgr.getProperties(player2.getEntityName());
+        var prop1 = mgr.getProperties(player1.getGameProfile().getName());
+        var prop2 = mgr.getProperties(player2.getGameProfile().getName());
 
         boolean dc1 = prop1.isPresent() && isDisableCollision(prop1.get());
         boolean dc2 = prop2.isPresent() && isDisableCollision(prop2.get());

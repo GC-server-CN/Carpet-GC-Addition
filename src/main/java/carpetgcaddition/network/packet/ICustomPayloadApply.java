@@ -1,5 +1,5 @@
 package carpetgcaddition.network.packet;
 
-public interface IFabricPacketApply {
+public interface ICustomPayloadApply {
     void apply();
 }

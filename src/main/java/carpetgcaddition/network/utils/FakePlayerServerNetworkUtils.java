@@ -2,11 +2,10 @@ package carpetgcaddition.network.utils;
 
 import carpet.patches.EntityPlayerMPFake;
 import carpetgcaddition.CarpetGCAdditionMod;
-import carpetgcaddition.delegate.Func;
 import carpetgcaddition.fakeplayeraddition.FakePlayerAdditionProperties;
-import carpetgcaddition.network.packet.s2c.AllFakePlayerPropsS2CPacket;
-import carpetgcaddition.network.packet.s2c.FakePlayerGameJOES2CPacket;
-import carpetgcaddition.network.packet.s2c.FakePlayerPropsS2CPacket;
+import carpetgcaddition.network.packet.s2c.AllFakePlayerPropsS2CPayload;
+import carpetgcaddition.network.packet.s2c.FakePlayerGameJOES2CPayload;
+import carpetgcaddition.network.packet.s2c.FakePlayerPropsS2CPayload;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerManager;
@@ -20,7 +19,7 @@ public class FakePlayerServerNetworkUtils {
         var fakePlayersNames = mgr.getFakePlayerNames();
 
         if (fakePlayersNames == null || fakePlayersNames.isEmpty()) {
-            ServerPlayNetworking.send(player, AllFakePlayerPropsS2CPacket.empty());
+            ServerPlayNetworking.send(player, AllFakePlayerPropsS2CPayload.empty());
             return;
         }
 
@@ -32,7 +31,7 @@ public class FakePlayerServerNetworkUtils {
             props[i] = mgr.getProperties(fakePlayers[i]).get();
         }
 
-        ServerPlayNetworking.send(player, new AllFakePlayerPropsS2CPacket(fakePlayers, props));
+        ServerPlayNetworking.send(player, new AllFakePlayerPropsS2CPayload(fakePlayers, props));
     }
 
     public static void onFakePlayerLoggedIn(EntityPlayerMPFake player) {
@@ -45,7 +44,7 @@ public class FakePlayerServerNetworkUtils {
             return;
         }
 
-        var packet = new FakePlayerGameJOES2CPacket(player.getGameProfile().getName(), false);
+        var packet = new FakePlayerGameJOES2CPayload(player.getGameProfile().getName(), false);
         for (var p : realPlayers) {
             ServerPlayNetworking.send(p, packet);
         }
@@ -57,7 +56,7 @@ public class FakePlayerServerNetworkUtils {
             return;
         }
 
-        var packet = new FakePlayerGameJOES2CPacket(player.getGameProfile().getName(), true);
+        var packet = new FakePlayerGameJOES2CPayload(player.getGameProfile().getName(), true);
         for (var p : realPlayers) {
             ServerPlayNetworking.send(p, packet);
         }
@@ -74,7 +73,7 @@ public class FakePlayerServerNetworkUtils {
             return;
         }
 
-        var packet = new FakePlayerPropsS2CPacket(playerName, prop.get());
+        var packet = new FakePlayerPropsS2CPayload(playerName, prop.get());
         for (var p : realPlayers) {
             ServerPlayNetworking.send(p, packet);
         }

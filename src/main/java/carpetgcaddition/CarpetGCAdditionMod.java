@@ -1,8 +1,12 @@
 package carpetgcaddition;
 
 import carpetgcaddition.fakeplayeraddition.FakePlayerPropertiesManager;
+import carpetgcaddition.network.packet.s2c.AllFakePlayerPropsS2CPayload;
+import carpetgcaddition.network.packet.s2c.FakePlayerGameJOES2CPayload;
+import carpetgcaddition.network.packet.s2c.FakePlayerPropsS2CPayload;
 import carpetgcaddition.translation.Translator;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,10 +27,17 @@ public class CarpetGCAdditionMod implements ModInitializer {
     @Override
     public void onInitialize() {
         Translator.init();
+        registerPayloads();
         server = CarpetGCAdditionServer.create();
     }
 
     public static void onInitializeClient() {
         client = CarpetGCAdditionClient.create();
+    }
+
+    public static void registerPayloads() {
+        PayloadTypeRegistry.playS2C().register(AllFakePlayerPropsS2CPayload.ID, AllFakePlayerPropsS2CPayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(FakePlayerGameJOES2CPayload.ID, FakePlayerGameJOES2CPayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(FakePlayerPropsS2CPayload.ID, FakePlayerPropsS2CPayload.CODEC);
     }
 }

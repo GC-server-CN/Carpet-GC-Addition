@@ -35,9 +35,6 @@ class ENTranslator {
             .desc("Disable collision between fake player and any real or fake players.")
             .extra("Can be override with collision option in /fakePlayer command for each fake player.");
 
-        builder.rule("softDeepslate")
-            .desc("can break deepslate in one click by netherite pickaxe (haste II + efficiency V required)");
-
         builder.rule("keepTickEntities")
             .desc("make server always tick entities");
     }
